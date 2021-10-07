@@ -56,7 +56,7 @@ public class MyAttemptAtPlotting extends JPanel {
         // set points to the graph
 
         double graphScaleX= (double)(width-2*graphOffSet)/(double)(Collections.max(xList)-Collections.min(xList));
-        graphScaleX=graphScaleX/2;
+        graphScaleX=graphScaleX;
         double graphScaleY =(double)(height-2*graphOffSet)/(double)(Collections.max(yList)-Collections.min(yList));
         graphScaleY=graphScaleY/2;
         graph.setPaint(Color.GREEN);
