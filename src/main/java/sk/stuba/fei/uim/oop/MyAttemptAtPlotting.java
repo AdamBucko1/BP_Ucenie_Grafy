@@ -1,12 +1,19 @@
 package sk.stuba.fei.uim.oop;
 
+import lombok.SneakyThrows;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 
 public class MyAttemptAtPlotting extends JPanel {
 
@@ -16,13 +23,46 @@ public class MyAttemptAtPlotting extends JPanel {
     int[] Xcords = {0, 1, 5, 10, 15, 25, 28, 32, 50, 80, 85, -1, -5, -10, -15, -25, -28, -32, -50, -80, -85,};
     int graphOffSet=50;
 
-    public MyAttemptAtPlotting() {
-        for (int i = 0; i < Xcords.length; i++) {
-            xList.add(Xcords[i]);
+    public MyAttemptAtPlotting()  {
+
+   /* File dataFile = new File("DataFile.txt");
+        Scanner scanner= new Scanner(dataFile);*/
+
+        Path dataFilePath = Paths.get("src/main/java/sk/stuba/fei/uim/oop/DataFile.txt");
+        FileWriter writer =null;
+
+
+        try {
+            writer= new FileWriter("src/main/java/sk/stuba/fei/uim/oop/OutfileFile.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
+        try {
+            Scanner scanner = new Scanner(dataFilePath);
+            //List<Integer> integers = new ArrayList<>();
+            while (scanner.hasNext()) {
+                if (scanner.hasNextInt()) {
+                    xList.add(scanner.nextInt());
+                } else {
+                    scanner.next();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         //Y=x^2
         for (int i = 0; i < xList.size(); i++) {
             yList.add(xList.get(i)*xList.get(i));
+            try {
+                writer.write(yList.get(i));
+                writer.write(" ");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         createFrame(this);
     }
@@ -44,10 +84,6 @@ public class MyAttemptAtPlotting extends JPanel {
         graph.draw(new Line2D.Double(graphOffSet, height/2,width-graphOffSet, height/2)); //X os
         graph.draw(new Line2D.Double(width/2, graphOffSet, width/2, height-graphOffSet)); //Y os
 
-        //find value of x and scale to plot points
-       // double x = (double)(width-2*marg)/(cord.length-1);
-       // double scale = (double)(height-2*marg)/getMax();
-
         //set color for points
         graph.setPaint(Color.RED);
 
@@ -56,7 +92,6 @@ public class MyAttemptAtPlotting extends JPanel {
         // set points to the graph
 
         double graphScaleX= (double)(width-2*graphOffSet)/(double)(Collections.max(xList)-Collections.min(xList));
-        graphScaleX=graphScaleX;
         double graphScaleY =(double)(height-2*graphOffSet)/(double)(Collections.max(yList)-Collections.min(yList));
         graphScaleY=graphScaleY/2;
         graph.setPaint(Color.GREEN);
