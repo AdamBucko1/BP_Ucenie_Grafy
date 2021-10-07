@@ -51,6 +51,7 @@ public class MyAttemptAtPlotting extends JPanel {
 
 
         //Y=x^2
+        //WRITE DOESNT WORK YET
         for (int i = 0; i < xList.size(); i++) {
             yList.add(xList.get(i)*xList.get(i));
             try {
@@ -76,17 +77,12 @@ public class MyAttemptAtPlotting extends JPanel {
         int width = getWidth();
         int height = getHeight();
 
-        // draw graph
+        // draw graph lines
         graph.draw(new Line2D.Double(graphOffSet, height/2,width-graphOffSet, height/2)); //X os
         graph.draw(new Line2D.Double(width/2, graphOffSet, width/2, height-graphOffSet)); //Y os
 
-        //set color for points
-        graph.setPaint(Color.RED);
 
-
-        //0 at height/2 width/2
-        // set points to the graph
-
+        //calculates scale ratio between points and grap size
         double graphScaleX= (double)(width-2*graphOffSet)/(double)(Collections.max(xList)-Collections.min(xList));
         double graphScaleY =(double)(height-2*graphOffSet)/(double)(Collections.max(yList)-Collections.min(yList));
         graphScaleY=graphScaleY/2;
@@ -95,6 +91,7 @@ public class MyAttemptAtPlotting extends JPanel {
             graph.fill(new Ellipse2D.Double(width/2+i*graphScaleX, height/2-(i*i)*graphScaleY, 1, 1));
 
         }
+        // set points to the graph
         //set color for points
         graph.setPaint(Color.RED);
         for(int i=0; i<xList.size(); i++){
