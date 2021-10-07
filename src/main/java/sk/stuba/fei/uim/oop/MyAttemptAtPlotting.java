@@ -20,13 +20,9 @@ public class MyAttemptAtPlotting extends JPanel {
 
     ArrayList<Integer> xList = new ArrayList<>();
     ArrayList<Integer> yList = new ArrayList<>();
-    int[] Xcords = {0, 1, 5, 10, 15, 25, 28, 32, 50, 80, 85, -1, -5, -10, -15, -25, -28, -32, -50, -80, -85,};
     int graphOffSet=50;
 
     public MyAttemptAtPlotting()  {
-
-   /* File dataFile = new File("DataFile.txt");
-        Scanner scanner= new Scanner(dataFile);*/
 
         Path dataFilePath = Paths.get("src/main/java/sk/stuba/fei/uim/oop/DataFile.txt");
         FileWriter writer =null;
