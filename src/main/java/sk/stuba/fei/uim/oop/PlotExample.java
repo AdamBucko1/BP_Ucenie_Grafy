@@ -9,23 +9,10 @@ import java.util.ArrayList;
 
 //Extends JPanel class
 public class PlotExample extends JPanel{
-    //initialize coordinates
-   /* ArrayList<Integer> xList= new ArrayList<>();
-    ArrayList<Integer> yList= new ArrayList<>();
-    int[] Xcords = {1, 5, 10, 15, 25, 28, 32, 50, 80, 85,};*/
 
     int[] cord = {650, 200, 400, 800};
     int marg = 60;
 
-   /* public PlotExample() {
-        for (int i=0;i<Xcords.length;i++){
-        xList.add(Xcords[i]);
-        }
-        //Y=x^2
-        for (int i=0;i<Xcords.length;i++){
-            yList.add(Xcords[i]*Xcords[i]);
-        }
-    }*/
 
     protected void paintComponent(Graphics grf){
         //create instance of the Graphics to use its methods

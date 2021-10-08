@@ -1,7 +1,5 @@
 package sk.stuba.fei.uim.oop;
 
-import lombok.SneakyThrows;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -10,9 +8,7 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 public class MyAttemptAtPlotting extends JPanel {
@@ -78,16 +74,36 @@ public class MyAttemptAtPlotting extends JPanel {
         int height = getHeight();
 
         // draw graph lines
-        graph.draw(new Line2D.Double(graphOffSet, height/2,width-graphOffSet, height/2)); //X os
-        graph.draw(new Line2D.Double(width/2, graphOffSet, width/2, height-graphOffSet)); //Y os
+        graph.draw(new Line2D.Double(graphOffSet, height/2,width-graphOffSet, height/2)); //X axis
+        graph.draw(new Line2D.Double(width/2, graphOffSet, width/2, height-graphOffSet)); //Y axis
 
 
         //calculates scale ratio between points and grap size
-        double graphScaleX= (double)(width-2*graphOffSet)/(double)(Collections.max(xList)-Collections.min(xList));
-        double graphScaleY =(double)(height-2*graphOffSet)/(double)(Collections.max(yList)-Collections.min(yList));
+        double xListMax;
+        if (Collections.max(xList)<Math.abs(Collections.min(xList))){
+            xListMax=Math.abs(Collections.min(xList));
+        }
+        else {
+            xListMax=Collections.max(xList);
+        }
+        double yListMax;
+        if (Collections.max(yList)<Math.abs(Collections.min(yList))){
+            yListMax=Math.abs(Collections.min(yList));
+        }
+        else {
+            yListMax=Collections.max(yList);
+        }
+
+        double graphScaleX= (double)(width-2*graphOffSet)/(double)(xListMax);
+        double graphScaleY =(double)(height-2*graphOffSet)/(double)(yListMax);
+
         graphScaleY=graphScaleY/2;
+        graphScaleX=graphScaleX/2;
         graph.setPaint(Color.GREEN);
-        for (double i=-Collections.max(xList);i<Collections.max(xList);i=i+0.01){
+        drawAxisScale(graph,yListMax,width,height,graphScaleY,true);
+        drawAxisScale(graph,xListMax,width,height,graphScaleX,false);
+
+        for (double i=-xListMax;i<xListMax;i=i+0.01){
             graph.fill(new Ellipse2D.Double(width/2+i*graphScaleX, height/2-(i*i)*graphScaleY, 1, 1));
 
         }
@@ -103,6 +119,72 @@ public class MyAttemptAtPlotting extends JPanel {
         }
     }
 
+    private void drawAxisScale(Graphics2D graph, double endOfAxis, double width, double height, double axisScale, boolean isY){
+        int scaleIncreaser=10;
+        double[] listOfScale =new double[10];
+        fillListOfScale(listOfScale);
+
+        while (true){
+            if (endOfAxis < 0.01*scaleIncreaser) {
+                setAxisUpToScale(listOfScale,scaleIncreaser);
+                break;
+
+            }
+
+       scaleIncreaser=scaleIncreaser+10;
+        }
+        graph.setPaint(Color.BLACK);
+        for (int i = 0; i< listOfScale.length; i++){
+            if (listOfScale[i]> endOfAxis){
+                if (isY==true){
+                graph.draw(new Line2D.Double(width/2-2, height/2- endOfAxis * axisScale,width/2+2, height/2- endOfAxis * axisScale));
+                graph.draw(new Line2D.Double(width/2-2, height/2+ endOfAxis * axisScale,width/2+2, height/2+ endOfAxis * axisScale));
+
+                    for (int j=1;j<=9;j++){
+                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 - (endOfAxis-(listOfScale[0]/10)*j) * axisScale, width / 2 + 1, height / 2 - (endOfAxis-(listOfScale[0]/10)*j) * axisScale));
+                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale, width / 2 + 1, height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale));
+
+                    }
+                }
+                else {
+                    graph.draw(new Line2D.Double(width/2- endOfAxis * axisScale, height/2-2,width/2- endOfAxis * axisScale, height/2+2));
+                    graph.draw(new Line2D.Double(width/2+ endOfAxis * axisScale, height/2-2,width/2+ endOfAxis * axisScale, height/2+2));
+
+                    for (int jj=1;jj<=9;jj++){
+                        graph.draw(new Line2D.Double( width / 2 -((endOfAxis-(listOfScale[0]/10)*jj) * axisScale), height/2-1, width/2 - (endOfAxis-(listOfScale[0]/10)*jj) * axisScale, height / 2 + 1));
+                        graph.draw(new Line2D.Double( width / 2 +((endOfAxis-(listOfScale[0]/10)*jj) * axisScale), height/2-1, width/2 + (endOfAxis-(listOfScale[0]/10)*jj) * axisScale, height / 2 + 1));
+
+                    }
+                }
+                break;
+            }
+            else {
+                if (isY==true) {
+                    graph.draw(new Line2D.Double(width / 2 - 2, height / 2 - listOfScale[i] * axisScale, width / 2 + 2, height / 2 - listOfScale[i] * axisScale));
+                    graph.draw(new Line2D.Double(width / 2 - 2, height / 2 + listOfScale[i] * axisScale, width / 2 + 2, height / 2 + listOfScale[i] * axisScale));
+                    for (int ii=1;ii<=9;ii++){
+                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 - (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale, width / 2 + 1, height / 2 - (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale));
+                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 + (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale, width / 2 + 1, height / 2 + (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale));
+
+                    }
+                }
+                else {
+                    graph.draw(new Line2D.Double(width/2- listOfScale[i]* axisScale, height/2-2,width/2- listOfScale[i]* axisScale, height/2+2));
+                    graph.draw(new Line2D.Double(width/2+ listOfScale[i]* axisScale, height/2-2,width/2+ listOfScale[i]* axisScale, height/2+2));
+                    for (int iii=1;iii<=9;iii++){
+                        graph.draw(new Line2D.Double( width / 2 -((listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale), height/2-1, width/2 - (listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale, height / 2 + 1));
+                        graph.draw(new Line2D.Double( width / 2 +((listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale), height/2-1, width/2 + (listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale, height / 2 + 1));
+
+                    }
+
+                }
+            }
+        }
+
+
+
+    }
+
 
     private void createFrame(MyAttemptAtPlotting myAttemptAtPlotting){
         //create an instance of JFrame class
@@ -110,11 +192,20 @@ public class MyAttemptAtPlotting extends JPanel {
         // set size, layout and location for frame.
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(myAttemptAtPlotting);
-        frame.setSize(750, 500);
+        frame.setSize(1500, 1000);
         frame.setLocation(200, 200);
         frame.setVisible(true);
     }
+    private void fillListOfScale(double[] listOfYScale){
+        for (int i=0;i<listOfYScale.length;){
+        listOfYScale[i]=0.001*++i;
+        }
 
+    }
+    private void setAxisUpToScale(double[] listOfYScale, int scaleIncreaser){
+        for (int i=0;i<listOfYScale.length;i++){
+            listOfYScale[i]=listOfYScale[i]*scaleIncreaser;
+        }
 
-
+    }
 }
