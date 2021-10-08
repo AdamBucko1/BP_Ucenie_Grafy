@@ -74,8 +74,8 @@ public class MyAttemptAtPlotting extends JPanel {
         int height = getHeight();
 
         // draw graph lines
-        graph.draw(new Line2D.Double(graphOffSet, height/2,width-graphOffSet, height/2)); //X axis
-        graph.draw(new Line2D.Double(width/2, graphOffSet, width/2, height-graphOffSet)); //Y axis
+       /* graph.draw(new Line2D.Double(graphOffSet, height/2,width-graphOffSet, height/2)); //X axis
+        graph.draw(new Line2D.Double(width/2, graphOffSet, width/2, height-graphOffSet)); //Y axis*/
 
 
         //calculates scale ratio between points and grap size
@@ -99,11 +99,11 @@ public class MyAttemptAtPlotting extends JPanel {
 
         graphScaleY=graphScaleY/2;
         graphScaleX=graphScaleX/2;
-        graph.setPaint(Color.GREEN);
 
-
-        drawAxisScale(graph,yListMax,width,height,graphScaleY,true);
-        drawAxisScale(graph,xListMax,width,height,graphScaleX,false);
+        new DrawAxis(graph,yListMax,width,height,graphScaleY,true,graphOffSet);
+        new DrawAxis(graph,xListMax,width,height,graphScaleX,false,graphOffSet);
+       /* drawAxisScale(graph,yListMax,width,height,graphScaleY,true);
+        drawAxisScale(graph,xListMax,width,height,graphScaleX,false);*/
 
         for (double i=-xListMax;i<xListMax;i=i+xListMax/10000){
             graph.fill(new Ellipse2D.Double(width/2+i*graphScaleX, height/2-(i*i)*graphScaleY, 1, 1));
@@ -120,7 +120,7 @@ public class MyAttemptAtPlotting extends JPanel {
             graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
         }
     }
-
+/*
     private void fillListOfScale(double[] listOfYScale){
         for (int i=0;i<listOfYScale.length;){
             listOfYScale[i]=0.001*++i;
@@ -213,7 +213,7 @@ public class MyAttemptAtPlotting extends JPanel {
 
 
     }
-
+*/
 
     private void createFrame(MyAttemptAtPlotting myAttemptAtPlotting){
         //create an instance of JFrame class
