@@ -39,6 +39,7 @@ public class DrawAxis {
         if (isY){
             graph.setPaint(Color.BLACK);
         graph.draw(new Line2D.Double(graphOffSet, height/2,width-graphOffSet, height/2));} //X axis
+
         else {
             graph.setPaint(Color.BLACK);
         graph.draw(new Line2D.Double(width/2, graphOffSet, width/2, height-graphOffSet));} //Y axis
@@ -62,6 +63,7 @@ public class DrawAxis {
 
         }
         graph.setPaint(Color.BLACK);
+        graph.drawString("0",(int)width/2+3,(int)height/2+15 );
         for (int i = 0; i< listOfScale.length; i++){
             if (listOfScale[i]> endOfAxis){
                 if (isY==true){
