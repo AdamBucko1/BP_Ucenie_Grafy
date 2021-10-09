@@ -12,8 +12,9 @@ public class DrawAxis {
     boolean isY;
     int graphOffSet;
     double zoom;
+    MouseMovement mouseMovement;
 
-    public DrawAxis(Graphics2D graph, double endOfAxis, double width, double height, double axisScale, boolean isY, int graphOffSet, double zoom) {
+    public DrawAxis(Graphics2D graph, double endOfAxis, double width, double height, double axisScale, boolean isY, int graphOffSet, double zoom, MouseMovement mouseMovement) {
         this.graph = graph;
         this.endOfAxis = endOfAxis;
         this.width = width;
@@ -22,6 +23,7 @@ public class DrawAxis {
         this.isY = isY;
         this.graphOffSet= graphOffSet;
         this.zoom=zoom;
+        this.mouseMovement=mouseMovement;
         drawAxisScale();
     }
     //toto je základná podoba mierky ktorá sa neskôr upravý na požadovanú veľkosť, je volaná z metódy drawAxisScale
@@ -43,7 +45,7 @@ public class DrawAxis {
         //vykreslenie "holej" x osi
         if (isY){
             graph.setPaint(Color.BLACK);
-        graph.draw(new Line2D.Double(graphOffSet-(width*zoom-width), height/2,width-graphOffSet+(width*zoom-width), height/2));} //X axis
+        graph.draw(new Line2D.Double(graphOffSet-(width*mouseMovement.getScalingX()-width)-mouseMovement.getCorrectionX(), height/2,width-graphOffSet+(width* mouseMovement.getScalingX()-width)-mouseMovement.getCorrectionX(), height/2));} //X axis
 
         //vykreslenie "holej" y osi
         else {
