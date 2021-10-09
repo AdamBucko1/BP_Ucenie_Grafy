@@ -11,8 +11,9 @@ public class DrawAxis {
     double axisScale;
     boolean isY;
     int graphOffSet;
+    double zoom;
 
-    public DrawAxis(Graphics2D graph, double endOfAxis, double width, double height, double axisScale, boolean isY, int graphOffSet) {
+    public DrawAxis(Graphics2D graph, double endOfAxis, double width, double height, double axisScale, boolean isY, int graphOffSet, double zoom) {
         this.graph = graph;
         this.endOfAxis = endOfAxis;
         this.width = width;
@@ -20,6 +21,7 @@ public class DrawAxis {
         this.axisScale = axisScale;
         this.isY = isY;
         this.graphOffSet= graphOffSet;
+        this.zoom=zoom;
         drawAxisScale();
     }
     //toto je základná podoba mierky ktorá sa neskôr upravý na požadovanú veľkosť, je volaná z metódy drawAxisScale
@@ -38,15 +40,15 @@ public class DrawAxis {
     }
 
     public void drawAxisScale(){
-        //vykreslenie "holej" y osi
+        //vykreslenie "holej" x osi
         if (isY){
             graph.setPaint(Color.BLACK);
-        graph.draw(new Line2D.Double(graphOffSet, height/2,width-graphOffSet, height/2));} //X axis
+        graph.draw(new Line2D.Double(graphOffSet-(width*zoom-width), height/2,width-graphOffSet+(width*zoom-width), height/2));} //X axis
 
-        //vykreslenie "holej" x osi
+        //vykreslenie "holej" y osi
         else {
             graph.setPaint(Color.BLACK);
-        graph.draw(new Line2D.Double(width/2, graphOffSet, width/2, height-graphOffSet));} //Y axis
+        graph.draw(new Line2D.Double(width/2, graphOffSet-(height*zoom-height), width/2, height-graphOffSet+(height*zoom-height)));} //Y axis
 
         //ideme vypočítať scaleIncreaser
         long scaleIncreaser=10;
@@ -77,29 +79,29 @@ public class DrawAxis {
             if (listOfScale[i]> endOfAxis){
                 ////Algoritmus pre grafické osadenie koncovej hodnoty na osi Y +9 medzičiar.
                 if (isY==true){
-                    graph.draw(new Line2D.Double(width/2-2, height/2- endOfAxis * axisScale,width/2+2, height/2- endOfAxis * axisScale));
-                    graph.drawString(Double.toString(endOfAxis), (int) (width / 2 + 2), Math.round((height / 2 - (endOfAxis* axisScale))));
+                    graph.draw(new Line2D.Double(width/2-2, height/2- (endOfAxis * axisScale*zoom),width/2+2, height/2- (endOfAxis * axisScale*zoom)));
+                    graph.drawString(Double.toString(endOfAxis), (int) (width / 2 + 2), Math.round((height / 2 - (endOfAxis* axisScale*zoom))));
 
-                    graph.draw(new Line2D.Double(width/2-2, height/2+ endOfAxis * axisScale,width/2+2, height/2+ endOfAxis * axisScale));
-                    graph.drawString(Double.toString(-endOfAxis), (int) (width / 2 + 2), Math.round((height / 2 + (endOfAxis* axisScale))));
+                    graph.draw(new Line2D.Double(width/2-2, height/2+ (endOfAxis * axisScale*zoom),width/2+2, height/2+ (endOfAxis * axisScale*zoom)));
+                    graph.drawString(Double.toString(-endOfAxis), (int) (width / 2 + 2), Math.round((height / 2 + (endOfAxis* axisScale*zoom))));
 
                     for (int j=1;j<=9;j++){
-                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 - (endOfAxis-(listOfScale[0]/10)*j) * axisScale, width / 2 + 1, height / 2 - (endOfAxis-(listOfScale[0]/10)*j) * axisScale));
-                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale, width / 2 + 1, height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale));
+                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 - (endOfAxis-(listOfScale[0]/10)*j) * axisScale*zoom, width / 2 + 1, height / 2 - (endOfAxis-(listOfScale[0]/10)*j) * axisScale*zoom));
+                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale*zoom, width / 2 + 1, height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale*zoom));
 
                     }
                 }
 
                 ////Algoritmus pre grafické osadenie koncovej hodnoty na osi X+ 9 medzičiar.
                 else {
-                    graph.draw(new Line2D.Double(width/2- endOfAxis * axisScale, height/2-2,width/2- endOfAxis * axisScale, height/2+2));
-                    graph.drawString(Double.toString(endOfAxis), Math.round((width / 2 + (endOfAxis* axisScale))-3),(int) height/2+15);
-                    graph.draw(new Line2D.Double(width/2+ endOfAxis * axisScale, height/2-2,width/2+ endOfAxis * axisScale, height/2+2));
-                    graph.drawString(Double.toString(-endOfAxis), Math.round((width / 2 - (endOfAxis* axisScale))-3),(int) height/2+15);
+                    graph.draw(new Line2D.Double(width/2- endOfAxis * axisScale*zoom, height/2-2,width/2- endOfAxis * axisScale*zoom, height/2+2));
+                    graph.drawString(Double.toString(endOfAxis), Math.round((width / 2 + (endOfAxis* axisScale*zoom))-3),(int) height/2+15);
+                    graph.draw(new Line2D.Double(width/2+ endOfAxis * axisScale*zoom, height/2-2,width/2+ endOfAxis * axisScale*zoom, height/2+2));
+                    graph.drawString(Double.toString(-endOfAxis), Math.round((width / 2 - (endOfAxis* axisScale*zoom))-3),(int) height/2+15);
 
                     for (int jj=1;jj<=9;jj++){
-                        graph.draw(new Line2D.Double( width / 2 -((endOfAxis-(listOfScale[0]/10)*jj) * axisScale), height/2-1, width/2 - (endOfAxis-(listOfScale[0]/10)*jj) * axisScale, height / 2 + 1));
-                        graph.draw(new Line2D.Double( width / 2 +((endOfAxis-(listOfScale[0]/10)*jj) * axisScale), height/2-1, width/2 + (endOfAxis-(listOfScale[0]/10)*jj) * axisScale, height / 2 + 1));
+                        graph.draw(new Line2D.Double( width / 2 -((endOfAxis-(listOfScale[0]/10)*jj) * axisScale*zoom), height/2-1, width/2 - (endOfAxis-(listOfScale[0]/10)*jj) * axisScale*zoom, height / 2 + 1));
+                        graph.draw(new Line2D.Double( width / 2 +((endOfAxis-(listOfScale[0]/10)*jj) * axisScale*zoom), height/2-1, width/2 + (endOfAxis-(listOfScale[0]/10)*jj) * axisScale*zoom, height / 2 + 1));
 
                     }
                 }
@@ -109,25 +111,25 @@ public class DrawAxis {
             else {
                 //Algoritmus pre grafické osadenie mierky na os Y aj s medzičiarami medzi číselne vyjadrenými bodmi mierky.
                 if (isY==true) {
-                    graph.draw(new Line2D.Double(width / 2 - 2, height / 2 - listOfScale[i] * axisScale, width / 2 + 2, height / 2 - listOfScale[i] * axisScale));
-                    graph.drawString(Double.toString(listOfScale[i]), (int) (width / 2 + 2), Math.round((height / 2 - (listOfScale[i]* axisScale))));
-                    graph.draw(new Line2D.Double(width / 2 - 2, height / 2 + listOfScale[i] * axisScale, width / 2 + 2, height / 2 + listOfScale[i] * axisScale));
-                    graph.drawString(Double.toString(-listOfScale[i]), (int) (width / 2 + 2), Math.round((height / 2 + (listOfScale[i]* axisScale))));
+                    graph.draw(new Line2D.Double(width / 2 - 2, height / 2 - listOfScale[i] * axisScale*zoom, width / 2 + 2, height / 2 - listOfScale[i] * axisScale*zoom));
+                    graph.drawString(Double.toString(listOfScale[i]), (int) (width / 2 + 2), Math.round((height / 2 - (listOfScale[i]* axisScale*zoom))));
+                    graph.draw(new Line2D.Double(width / 2 - 2, height / 2 + listOfScale[i] * axisScale*zoom, width / 2 + 2, height / 2 + listOfScale[i] * axisScale*zoom));
+                    graph.drawString(Double.toString(-listOfScale[i]), (int) (width / 2 + 2), Math.round((height / 2 + (listOfScale[i]* axisScale*zoom))));
                     for (int ii=1;ii<=9;ii++){
-                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 - (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale, width / 2 + 1, height / 2 - (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale));
-                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 + (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale, width / 2 + 1, height / 2 + (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale));
+                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 - (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale*zoom, width / 2 + 1, height / 2 - (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale*zoom));
+                        graph.draw(new Line2D.Double(width / 2 - 1, height / 2 + (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale*zoom, width / 2 + 1, height / 2 + (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale*zoom));
 
                     }
                 }
                 //Algoritmus pre grafické osadenie mierky na os X aj s medzičiarami medzi číselne vyjadrenými bodmi mierky.
                 else {
-                    graph.draw(new Line2D.Double(width/2- listOfScale[i]* axisScale, height/2-2,width/2- listOfScale[i]* axisScale, height/2+2));
-                    graph.drawString(Double.toString(listOfScale[i]), Math.round((width / 2 + (listOfScale[i]* axisScale))-3),(int) height/2+15);
-                    graph.draw(new Line2D.Double(width/2+ listOfScale[i]* axisScale, height/2-2,width/2+ listOfScale[i]* axisScale, height/2+2));
-                    graph.drawString(Double.toString(-listOfScale[i]), Math.round((width / 2 - (listOfScale[i]* axisScale))-3),(int) height/2+15);
+                    graph.draw(new Line2D.Double(width/2- listOfScale[i]* axisScale*zoom, height/2-2,width/2- listOfScale[i]* axisScale*zoom, height/2+2));
+                    graph.drawString(Double.toString(listOfScale[i]), Math.round((width / 2 + (listOfScale[i]* axisScale*zoom))-3),(int) height/2+15);
+                    graph.draw(new Line2D.Double(width/2+ listOfScale[i]* axisScale*zoom, height/2-2,width/2+ listOfScale[i]* axisScale*zoom, height/2+2));
+                    graph.drawString(Double.toString(-listOfScale[i]), Math.round((width / 2 - (listOfScale[i]* axisScale*zoom))-3),(int) height/2+15);
                     for (int iii=1;iii<=9;iii++){
-                        graph.draw(new Line2D.Double( width / 2 -((listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale), height/2-1, width/2 - (listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale, height / 2 + 1));
-                        graph.draw(new Line2D.Double( width / 2 +((listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale), height/2-1, width/2 + (listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale, height / 2 + 1));
+                        graph.draw(new Line2D.Double( width / 2 -((listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale*zoom), height/2-1, width/2 - (listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale*zoom, height / 2 + 1));
+                        graph.draw(new Line2D.Double( width / 2 +((listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale*zoom), height/2-1, width/2 + (listOfScale[i]-(listOfScale[0]/10)*iii) * axisScale*zoom, height / 2 + 1));
 
                     }
 

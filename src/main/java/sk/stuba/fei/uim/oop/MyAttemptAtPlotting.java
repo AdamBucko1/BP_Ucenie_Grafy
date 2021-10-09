@@ -1,5 +1,7 @@
 package sk.stuba.fei.uim.oop;
 
+import sk.stuba.fei.uim.oop.utility.KeyboardInput;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -17,6 +19,7 @@ public class MyAttemptAtPlotting extends JPanel {
     ArrayList<Integer> xList = new ArrayList<>();
     ArrayList<Integer> yList = new ArrayList<>();
     int graphOffSet=50;
+    double zoom=1.5;
 
     public MyAttemptAtPlotting()  {
 
@@ -96,18 +99,18 @@ public class MyAttemptAtPlotting extends JPanel {
         graphScaleY=graphScaleY/2;
         graphScaleX=graphScaleX/2;
 
-        new DrawAxis(graph,yListMax,width,height,graphScaleY,true,graphOffSet);
-        new DrawAxis(graph,xListMax,width,height,graphScaleX,false,graphOffSet);
+        new DrawAxis(graph,yListMax,width,height,graphScaleY,true,graphOffSet,zoom);
+        new DrawAxis(graph,xListMax,width,height,graphScaleX,false,graphOffSet,zoom);
 
         for (double i=-xListMax;i<xListMax;i=i+xListMax/10000){
-            graph.fill(new Ellipse2D.Double(width/2+i*graphScaleX, height/2-(i*i)*graphScaleY, 1, 1));
+            graph.fill(new Ellipse2D.Double(width/2+((i*graphScaleX)*zoom), height/2-(((i*i)*graphScaleY)*zoom), 1, 1));
 
         }
         graph.setPaint(Color.RED);
         for(int i=0; i<xList.size(); i++){
-            double drawX = width/2+xList.get(i)*graphScaleX;
+            double drawX = width/2+(xList.get(i)*graphScaleX*zoom);
             System.out.println(drawX);
-            double drawY = height/2-yList.get(i)*graphScaleY;
+            double drawY = height/2-(yList.get(i)*graphScaleY*zoom);
             System.out.println(drawY);
             graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
         }
