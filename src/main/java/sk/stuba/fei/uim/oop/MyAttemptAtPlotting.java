@@ -115,7 +115,7 @@ public class MyAttemptAtPlotting extends JPanel {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         for (double i=-xListMax;i<xListMax;i=i+xListMax/10000){
             //Stred osi X.... ziska poziciu na osi X  (i), vynasoby scalom aby bod pasoval na graf, posunie bod o hodnotu ziskanu pri zoomovani... a zvacsi ho na pozadovanu zoomnutu hodnotu
-            graph.fill(new Ellipse2D.Double((getWidth()/2+(i*graphScaleX)-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (getHeight()/2-(i*i)*graphScaleY-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), 1, 1));
+            graph.fill(new Ellipse2D.Double((getWidth()/2+(i*graphScaleX)-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (getHeight()/2-(Math.sin(i))*graphScaleY-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), 1, 1));
 
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
