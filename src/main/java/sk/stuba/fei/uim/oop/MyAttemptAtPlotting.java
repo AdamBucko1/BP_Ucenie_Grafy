@@ -18,7 +18,7 @@ public class MyAttemptAtPlotting extends JPanel {
 
     ArrayList<Integer> xList = new ArrayList<>();
     ArrayList<Integer> yList = new ArrayList<>();
-    int graphOffSet=10;
+    int graphOffSet=0;
     double zoom=1;
     MouseMovement mouseMovement;
 
@@ -115,8 +115,8 @@ public class MyAttemptAtPlotting extends JPanel {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         for (double i=-xListMax;i<xListMax;i=i+xListMax/10000){
             //Stred osi X.... ziska poziciu na osi X  (i), vynasoby scalom aby bod pasoval na graf, posunie bod o hodnotu ziskanu pri zoomovani... a zvacsi ho na pozadovanu zoomnutu hodnotu
-            graph.fill(new Ellipse2D.Double((getWidth()/2+(i*graphScaleX)-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (getHeight()/2-(Math.sin(i))*graphScaleY-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), 1, 1));
-
+            graph.fill(new Ellipse2D.Double((getWidth()/2+(i*graphScaleX)-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (getHeight()/2-(i*i)*graphScaleY-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), 1, 1));
+                                                          //REALNY BOD                  //POsun                     //Scaling                                    //REALNY BOD                  //POsun                     //Scaling
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,8 +162,9 @@ public class MyAttemptAtPlotting extends JPanel {
             rectangleCoordY=mouseMovement.getRectEndY();
         }
         graph.drawRect(rectangleCoordX,rectangleCoordY, Math.abs(mouseMovement.getRectEndX()-mouseMovement.getRectStartX()),Math.abs(mouseMovement.getRectEndY()-mouseMovement.getRectStartY()));
-        repaint();
+     //   repaint();
     }
+
 
     private void createFrame(MyAttemptAtPlotting myAttemptAtPlotting){
         //create an instance of JFrame class
