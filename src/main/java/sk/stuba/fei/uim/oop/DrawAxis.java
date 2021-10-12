@@ -40,17 +40,18 @@ public class DrawAxis {
         }
 
     }
-
+//((getWidth()/2+(i*graphScaleX)-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (getHeight()/2-(i*i)*graphScaleY-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), 1, 1));
     public void drawAxisScale(){
         //vykreslenie "holej" x osi
         if (isY){
             graph.setPaint(Color.BLACK);
-        graph.draw(new Line2D.Double(graphOffSet-(width*mouseMovement.getScalingX()-width)-mouseMovement.getCorrectionX(), height/2,width-graphOffSet+(width* mouseMovement.getScalingX()-width)-mouseMovement.getCorrectionX(), height/2));} //X axis
+            System.out.println("AAAAAAAA"+mouseMovement.getCorrectionY());
+        graph.draw(new Line2D.Double((graphOffSet-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (height/2-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(),(width-graphOffSet-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (height/2-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));} //X axis
 
         //vykreslenie "holej" y osi
         else {
             graph.setPaint(Color.BLACK);
-        graph.draw(new Line2D.Double(width/2, graphOffSet-(height*zoom-height), width/2, height-graphOffSet+(height*zoom-height)));} //Y axis
+        graph.draw(new Line2D.Double((width/2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (graphOffSet-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), (width/2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height-graphOffSet-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));} //Y axis
 
         //ideme vypočítať scaleIncreaser
         long scaleIncreaser=10;
@@ -104,12 +105,10 @@ public class DrawAxis {
                     for (int jj=1;jj<=9;jj++){
                         graph.draw(new Line2D.Double( width / 2 -((endOfAxis-(listOfScale[0]/10)*jj) * axisScale*zoom), height/2-1, width/2 - (endOfAxis-(listOfScale[0]/10)*jj) * axisScale*zoom, height / 2 + 1));
                         graph.draw(new Line2D.Double( width / 2 +((endOfAxis-(listOfScale[0]/10)*jj) * axisScale*zoom), height/2-1, width/2 + (endOfAxis-(listOfScale[0]/10)*jj) * axisScale*zoom, height / 2 + 1));
-
                     }
                 }
                 break;
             }
-
             else {
                 //Algoritmus pre grafické osadenie mierky na os Y aj s medzičiarami medzi číselne vyjadrenými bodmi mierky.
                 if (isY==true) {

@@ -18,9 +18,12 @@ public class MyAttemptAtPlotting extends JPanel {
 
     ArrayList<Integer> xList = new ArrayList<>();
     ArrayList<Integer> yList = new ArrayList<>();
-    int graphOffSet=0;
+    int graphOffSet=50;
     double zoom=1;
+    boolean startProgram=false;
     MouseMovement mouseMovement;
+    DrawAxis axisX;
+    DrawAxis axisY;
 
     public MyAttemptAtPlotting()  {
 
@@ -101,8 +104,14 @@ public class MyAttemptAtPlotting extends JPanel {
         graphScaleY=graphScaleY/2;
         graphScaleX=graphScaleX/2;
 
-        new DrawAxis(graph,yListMax,getWidth(),getHeight(),graphScaleY,true,graphOffSet,zoom,mouseMovement);
-        new DrawAxis(graph,xListMax,getWidth(),getHeight(),graphScaleX,false,graphOffSet,zoom,mouseMovement);
+        if  (startProgram==false){
+        axisX=new DrawAxis(graph,yListMax,getWidth(),getHeight(),graphScaleY,true,graphOffSet,zoom,mouseMovement);
+        axisY=new DrawAxis(graph,xListMax,getWidth(),getHeight(),graphScaleX,false,graphOffSet,zoom,mouseMovement);}
+        else {
+            axisX.drawAxisScale();
+            axisY.drawAxisScale();
+
+        }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,9 +139,9 @@ public class MyAttemptAtPlotting extends JPanel {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         graph.setPaint(Color.RED);
         for(int i=0; i<xList.size(); i++){
-            double drawX = getWidth()/2+(xList.get(i)*graphScaleX*mouseMovement.getScalingX())-mouseMovement.getCorrectionX();
+            double drawX = (getWidth()/2+(xList.get(i)*graphScaleX)-mouseMovement.getCorrectionX())*mouseMovement.getScalingX();
             System.out.println(drawX);
-            double drawY = getHeight()/2-(yList.get(i)*graphScaleY*mouseMovement.getScalingY())-mouseMovement.getCorrectionY();
+            double drawY = (getHeight()/2-(yList.get(i)*graphScaleY)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY();
             System.out.println(drawY);
             graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

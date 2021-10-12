@@ -48,20 +48,20 @@ public class MouseMovement extends MouseAdapter {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        scalingY = (double)myAttemptAtPlotting.getHeight()/(double)Math.abs(endY-startY);
-        scalingX = (double)myAttemptAtPlotting.getWidth()/(double)Math.abs(endX-startX);
         if (endX<startX){
-        correctionX=endX;
+            correctionX=(int)(correctionX+(double)endX/scalingX);
         }
         else {
-            correctionX=startX;
+            correctionX=(int)(correctionX+(double)startX/scalingX);
         }
         if (endY<startY){
-            correctionY=endY;
+            correctionY=(int)(correctionY+(double)endY/scalingY);
         }
         else {
-            correctionY=startY;
+            correctionY=(int)(correctionY+(double)startY/scalingY);
         }
+        scalingY =scalingY*(double)myAttemptAtPlotting.getHeight()/(double)Math.abs(endY-startY);
+        scalingX =scalingX*(double)myAttemptAtPlotting.getWidth()/(double)Math.abs(endX-startX);
         rectStartX=0;
         rectStartY=0;
         rectEndX=0;
