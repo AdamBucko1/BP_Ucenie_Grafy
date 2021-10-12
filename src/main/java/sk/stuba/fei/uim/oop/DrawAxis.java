@@ -46,12 +46,12 @@ public class DrawAxis {
         if (isY){
             graph.setPaint(Color.BLACK);
             System.out.println("AAAAAAAA"+mouseMovement.getCorrectionY());
-        graph.draw(new Line2D.Double((graphOffSet-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (height/2-mouseMovement.getCorrectionY()),(width-graphOffSet-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (height/2-mouseMovement.getCorrectionY())));} //X axis
+        graph.draw(new Line2D.Double((graphOffSet-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (height/2-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(),(width-graphOffSet-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (height/2-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));} //X axis
 
         //vykreslenie "holej" y osi
         else {
             graph.setPaint(Color.BLACK);
-        graph.draw(new Line2D.Double((width/2-mouseMovement.getCorrectionX()), (graphOffSet-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), (width/2-mouseMovement.getCorrectionX()), (height-graphOffSet-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));} //Y axis
+        graph.draw(new Line2D.Double((width/2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (graphOffSet-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), (width/2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height-graphOffSet-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));} //Y axis
 
         //ideme vypočítať scaleIncreaser
         long scaleIncreaser=10;
@@ -79,18 +79,18 @@ public class DrawAxis {
 
         );
         for (int i = 0; i< listOfScale.length; i++){
-            if (listOfScale[i]> endOfAxis){
+            if (listOfScale[i]> endOfAxis-endOfAxis/10){
                 ////Algoritmus pre grafické osadenie koncovej hodnoty na osi Y +9 medzičiar.
                 if (isY==true){
-                    graph.draw(new Line2D.Double((width/2-2-mouseMovement.getCorrectionX()), (height/2- (endOfAxis * axisScale)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(),(width/2+2-mouseMovement.getCorrectionX()), (height/2-(endOfAxis * axisScale)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
-                    graph.drawString(Double.toString( endOfAxis), (int) (width / 2 + 2)-mouseMovement.getCorrectionX(), Math.round(((height / 2 - endOfAxis*axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY())));
+                    graph.draw(new Line2D.Double((width/2-2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height/2- (endOfAxis * axisScale)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(),(width/2+2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height/2-(endOfAxis * axisScale)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
+                    graph.drawString(Double.toString( endOfAxis), (int) (((width / 2 + 2)-mouseMovement.getCorrectionX())*mouseMovement.getScalingX()), Math.round(((height / 2 - endOfAxis*axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY())));
 
-                    graph.draw(new Line2D.Double((width/2-2-mouseMovement.getCorrectionX()), (height/2+ (endOfAxis * axisScale)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(),(width/2+2-mouseMovement.getCorrectionX()), (height/2+(endOfAxis * axisScale)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
-                    graph.drawString(Double.toString(-endOfAxis), (int) (width / 2 + 2)-mouseMovement.getCorrectionX(), Math.round(((height / 2 + endOfAxis*axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY())));
+                    graph.draw(new Line2D.Double((width/2-2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height/2+ (endOfAxis * axisScale)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(),(width/2+2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height/2+(endOfAxis * axisScale)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
+                    graph.drawString(Double.toString(-endOfAxis), (int) (((width / 2 + 2)-mouseMovement.getCorrectionX())*mouseMovement.getScalingX()), Math.round(((height / 2 + endOfAxis*axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY())));
 
                     for (int j=1;j<=9;j++){
-                        graph.draw(new Line2D.Double(width / 2 - 1-mouseMovement.getCorrectionX(), (height / 2 - (endOfAxis-(listOfScale[0]/10)*j) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), width / 2 + 1-mouseMovement.getCorrectionX(), (height / 2 - (endOfAxis-(listOfScale[0]/10)*j) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
-                        graph.draw(new Line2D.Double(width / 2 - 1-mouseMovement.getCorrectionX(),( height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), width / 2 + 1-mouseMovement.getCorrectionX(), (height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
+                        graph.draw(new Line2D.Double((width / 2 - 1-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height / 2 - (endOfAxis-( listOfScale[0]/10)*j) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), (width / 2 + 1-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height / 2 - (endOfAxis-(listOfScale[0]/10)*j) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
+                        graph.draw(new Line2D.Double((width / 2 - 1-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(),( height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), (width / 2 + 1-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
 
                     }
                 }
@@ -113,15 +113,15 @@ public class DrawAxis {
                 //Algoritmus pre grafické osadenie mierky na os Y aj s medzičiarami medzi číselne vyjadrenými bodmi mierky.
                 if (isY==true) {
                     //graph.draw(new Line2D.Double(width / 2 - 1-mouseMovement.getCorrectionX(),( height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), width / 2 + 1-mouseMovement.getCorrectionX(), (height / 2 + (endOfAxis-(listOfScale[0]/10)*j) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
-                    graph.draw(new Line2D.Double(width / 2 - 2-mouseMovement.getCorrectionX(), ( height / 2 - ((listOfScale[i])) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), width / 2 + 2-mouseMovement.getCorrectionX(), ( height / 2 - (listOfScale[i]) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
-                    graph.drawString(Double.toString(listOfScale[i]), (int) (width / 2 + 2-mouseMovement.getCorrectionX()), Math.round((height / 2 - (listOfScale[i]* axisScale-mouseMovement.getCorrectionY()))*mouseMovement.getScalingY()));
-                    graph.draw(new Line2D.Double(width / 2 - 2-mouseMovement.getCorrectionX(), ( height / 2 + ((listOfScale[i])) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), width / 2 + 2-mouseMovement.getCorrectionX(), ( height / 2 + (listOfScale[i]) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
-                    graph.drawString(Double.toString(-listOfScale[i]), (int) (width / 2 + 2-mouseMovement.getCorrectionX()), Math.round((height / 2 + (listOfScale[i]* axisScale-mouseMovement.getCorrectionY()))*mouseMovement.getScalingY()));
+                    graph.draw(new Line2D.Double((width / 2 - 2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), ( height / 2 - ((listOfScale[i])) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), (width / 2 + 2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), ( height / 2 - (listOfScale[i]) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
+                    graph.drawString(Double.toString(listOfScale[i]), (int) ((width / 2 + 2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX()), Math.round((height / 2 - (listOfScale[i]* axisScale-mouseMovement.getCorrectionY()))*mouseMovement.getScalingY()));
+                    graph.draw(new Line2D.Double((width / 2 - 2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), ( height / 2 + ((listOfScale[i])) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), (width / 2 + 2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), ( height / 2 + (listOfScale[i]) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
+                    graph.drawString(Double.toString(-listOfScale[i]), (int) ((width / 2 + 2-mouseMovement.getCorrectionX())*mouseMovement.getScalingX()), Math.round((height / 2 + (listOfScale[i]* axisScale-mouseMovement.getCorrectionY()))*mouseMovement.getScalingY()));
                     for (int ii=1;ii<=9;ii++){
-                        graph.draw(new Line2D.Double(width / 2 - 1-mouseMovement.getCorrectionX(), ( height / 2 - ((listOfScale[i]-(listOfScale[0]/10)*ii)) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), width / 2 + 1-mouseMovement.getCorrectionX(), ( height / 2 - (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
+                        graph.draw(new Line2D.Double((width / 2 - 1-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), ( height / 2 - ((listOfScale[i]-(listOfScale[0]/10)*ii)) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), (width / 2 + 1-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), ( height / 2 - (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
                        // graph.draw(new Line2D.Double(width / 2 - 1, height / 2 - (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale*zoom, width / 2 + 1, height / 2 - (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale*zoom));
                      //   graph.draw(new Line2D.Double(width / 2 - 1, height / 2 + (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale*zoom, width / 2 + 1, height / 2 + (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale*zoom));
-                        graph.draw(new Line2D.Double(width / 2 - 1-mouseMovement.getCorrectionX(), ( height / 2 + ((listOfScale[i]-(listOfScale[0]/10)*ii)) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), width / 2 + 1-mouseMovement.getCorrectionX(), ( height / 2 + (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
+                        graph.draw(new Line2D.Double((width / 2 - 1-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), ( height / 2 + ((listOfScale[i]-(listOfScale[0]/10)*ii)) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), (width / 2 + 1-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), ( height / 2 + (listOfScale[i]-(listOfScale[0]/10)*ii) * axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
                     }
                 }
                 //Algoritmus pre grafické osadenie mierky na os X aj s medzičiarami medzi číselne vyjadrenými bodmi mierky.
