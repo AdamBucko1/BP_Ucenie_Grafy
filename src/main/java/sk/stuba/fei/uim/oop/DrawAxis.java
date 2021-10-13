@@ -89,9 +89,9 @@ public class DrawAxis {
                     graph.drawString(Double.toString(-endOfAxis), (int) (((width / 2 )-mouseMovement.getCorrectionX())*mouseMovement.getScalingX()-5), Math.round(((height / 2 + endOfAxis*axisScale-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()+10)));
 
                     for (int j=1;j<=9;j++){
-                        if ((endOfAxis-( listOfScale[0]/10)*j)<listOfScale[i]) {
-                            graph.draw(new Line2D.Double((width / 2 - 1 - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 - (endOfAxis - (listOfScale[0] / 10) * j) * axisScale - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY(), (width / 2 + 1 - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 - (endOfAxis - (listOfScale[0] / 10) * j) * axisScale - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY()));
-                            graph.draw(new Line2D.Double((width / 2 - 1 - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 + (endOfAxis - (listOfScale[0] / 10) * j) * axisScale - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY(), (width / 2 + 1 - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 + (endOfAxis - (listOfScale[0] / 10) * j) * axisScale - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY()));
+                        if (listOfScale[i-1]+(listOfScale[0]/10)*j<endOfAxis) {
+                            graph.draw(new Line2D.Double((width / 2 - 1 - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 - (listOfScale[i-1]+(listOfScale[0]/10)*j) * axisScale - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY(), (width / 2 + 1 - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 - (listOfScale[i-1]+(listOfScale[0]/10)*j) * axisScale - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY()));
+                            graph.draw(new Line2D.Double((width / 2 - 1 - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 + (listOfScale[i-1]+(listOfScale[0]/10)*j) * axisScale - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY(), (width / 2 + 1 - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 + (listOfScale[i-1]+(listOfScale[0]/10)*j) * axisScale - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY()));
                         }
                     }
                 }
@@ -104,9 +104,11 @@ public class DrawAxis {
                     graph.drawString(Double.toString(-endOfAxis), Math.round((width/2- endOfAxis * axisScale-mouseMovement.getCorrectionX())*mouseMovement.getScalingX()-3),(int) ((height/2-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()+25));
 
                     for (int jj=1;jj<=9;jj++){
-                        graph.draw(new Line2D.Double((width/2+ (endOfAxis-(listOfScale[0]/10)*jj) * axisScale-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height/2-1-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(),(width/2+ (endOfAxis-(listOfScale[0]/10)*jj) * axisScale-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height/2+1-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
-                        graph.draw(new Line2D.Double((width/2- (endOfAxis-(listOfScale[0]/10)*jj) * axisScale-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height/2-1-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(),(width/2- (endOfAxis-(listOfScale[0]/10)*jj) * axisScale-mouseMovement.getCorrectionX())*mouseMovement.getScalingX(), (height/2+1-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
-                    }
+                        if (listOfScale[i-1]+(listOfScale[0]/10)*jj<endOfAxis) {
+                            graph.draw(new Line2D.Double((width / 2 + (listOfScale[i-1]+(listOfScale[0]/10)*jj) * axisScale - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 - 1 - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY(), (width / 2 + (listOfScale[i-1]+(listOfScale[0]/10)*jj) * axisScale - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 + 1 - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY()));
+                            graph.draw(new Line2D.Double((width / 2 - (listOfScale[i-1]+(listOfScale[0]/10)*jj) * axisScale - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 - 1 - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY(), (width / 2 - (listOfScale[i-1]+(listOfScale[0]/10)*jj) * axisScale - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX(), (height / 2 + 1 - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY()));
+                        }
+                        }
                 }
                 break;
             }
