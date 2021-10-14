@@ -4,6 +4,8 @@ import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
@@ -15,9 +17,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class MyAttemptAtPlotting extends JPanel implements KeyListener {
+public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionListener {
 
-
+    JCheckBox fx;
+    JCheckBox fy;
+    JCheckBox fz;
+    JCheckBox mx;
+    JButton grid;
+    boolean showGrid=false;
+    boolean showFx=false;
+    boolean showFy=false;
+    boolean showFz=false;
+    boolean showMx=false;
     ArrayList<Integer> xList = new ArrayList<>();
     ArrayList<Integer> yList = new ArrayList<>();
     int graphOffSet=50;
@@ -174,7 +185,12 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener {
             rectangleCoordY=mouseMovement.getRectEndY();
         }
         graph.drawRect(rectangleCoordX,rectangleCoordY, Math.abs(mouseMovement.getRectEndX()-mouseMovement.getRectStartX()),Math.abs(mouseMovement.getRectEndY()-mouseMovement.getRectStartY()));
-     //   repaint();
+
+
+
+
+
+        //   repaint();
     }
 
 
@@ -184,9 +200,40 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener {
         // set size, layout and location for frame.
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
-        frame.add("Center",myAttemptAtPlotting);
         frame.setSize(700, 500);
         frame.setLocation(200, 200);
+
+        frame.add("Center",myAttemptAtPlotting);
+
+        JPanel controlPanel= new JPanel();
+        controlPanel.setSize(700,100);
+        grid = new JButton("GRID");
+        grid.setFocusable(false);
+        controlPanel.setLayout(new GridLayout(1,4));
+        controlPanel.add(grid);
+
+        fx= new JCheckBox("Fx[N]");
+        fx.setFocusable(false);
+        controlPanel.add(fx);
+        fx.addActionListener(this);
+
+        fy= new JCheckBox("Fy[N]");
+        fy.setFocusable(false);
+        controlPanel.add(fy);
+        fy.addActionListener(this);
+
+        fz= new JCheckBox("Fz[N]");
+        fz.setFocusable(false);
+        controlPanel.add(fz);
+        fz.addActionListener(this);
+
+        mx= new JCheckBox("Mx[N]");
+        mx.setFocusable(false);
+        controlPanel.add(mx);
+        mx.addActionListener(this);
+
+        grid.addActionListener(this);
+        frame.add("North",controlPanel);
         frame.setVisible(true);
     }
 
@@ -209,6 +256,47 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(grid)){
+            System.out.println("clicked >|");
+            showGrid=!showGrid;
+        }
+        if (fx.isSelected()){
+            System.out.println("fx   IS ON");
+            showFx=true;
+        }
+        else {
+            System.out.println("fx   IS OFF");
+            showFx=false;
+        }
+        if (fy.isSelected()){
+            System.out.println("fy   IS ON");
+            showFy=true;
+        }
+        else {
+            System.out.println("fy   IS OFF");
+            showFy=false;
+        }
+        if (fz.isSelected()){
+            System.out.println("fz   IS ON");
+            showFz=true;
+        }
+        else {
+            System.out.println("fz   IS OFF");
+            showFz=false;
+        }
+        if (mx.isSelected()){
+            System.out.println("mx   IS ON");
+            showMx=true;
+        }
+        else {
+            System.out.println("mx   IS OFF");
+            showMx=false;
+        }
 
     }
 }

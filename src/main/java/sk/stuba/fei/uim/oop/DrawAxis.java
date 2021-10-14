@@ -12,6 +12,7 @@ public class DrawAxis {
     boolean isY;
     int graphOffSet;
     double zoom;
+    boolean showGrid=true;
     MouseMovement mouseMovement;
 
     public DrawAxis(Graphics2D graph, double endOfAxis, double width, double height, double axisScale, boolean isY, int graphOffSet, double zoom, MouseMovement mouseMovement) {
@@ -42,6 +43,12 @@ public class DrawAxis {
     }
 //((getWidth()/2+(i*graphScaleX)-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (getHeight()/2-(i*i)*graphScaleY-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), 1, 1));
     public void drawAxisScale(){
+
+        if (showGrid){
+            graph.draw(new Line2D.Double());
+        }
+
+
         //vykreslenie "holej" x osi
         if (isY){
             graph.setPaint(Color.BLACK);
