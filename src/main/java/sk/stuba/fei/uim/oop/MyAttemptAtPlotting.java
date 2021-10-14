@@ -4,6 +4,8 @@ import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.io.*;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class MyAttemptAtPlotting extends JPanel {
+public class MyAttemptAtPlotting extends JPanel implements KeyListener {
 
 
     ArrayList<Integer> xList = new ArrayList<>();
@@ -68,6 +70,7 @@ public class MyAttemptAtPlotting extends JPanel {
         mouseMovement=new MouseMovement(this);
         this.addMouseListener(mouseMovement);
         this.addMouseMotionListener(mouseMovement);
+        this.addKeyListener(this);
     }
 
     protected void paintComponent(Graphics g){
@@ -185,5 +188,27 @@ public class MyAttemptAtPlotting extends JPanel {
         frame.setSize(700, 500);
         frame.setLocation(200, 200);
         frame.setVisible(true);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode()==KeyEvent.VK_ESCAPE){
+            mouseMovement.setCorrectionX(0);
+            mouseMovement.setCorrectionY(0);
+            mouseMovement.setScalingX(1);
+            mouseMovement.setScalingY(1);
+            repaint();
+
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

@@ -25,6 +25,7 @@ public class MouseMovement extends MouseAdapter {
     public MouseMovement(MyAttemptAtPlotting myAttemptAtPlotting) {
         this.myAttemptAtPlotting=myAttemptAtPlotting;
 
+
     }
 
     @Override
@@ -67,6 +68,8 @@ public class MouseMovement extends MouseAdapter {
         rectEndX=0;
         rectEndY=0;
         myAttemptAtPlotting.repaint();
+        myAttemptAtPlotting.setFocusable(true);
+        myAttemptAtPlotting.requestFocusInWindow();
 
     }
     public double getScalingX() {
@@ -98,5 +101,21 @@ public class MouseMovement extends MouseAdapter {
 
     public int getRectEndY() {
         return rectEndY;
+    }
+
+    public void setScalingX(double scalingX) {
+        this.scalingX = scalingX;
+    }
+
+    public void setScalingY(double scalingY) {
+        this.scalingY = scalingY;
+    }
+
+    public void setCorrectionX(int correctionX) {
+        this.correctionX = correctionX;
+    }
+
+    public void setCorrectionY(int correctionY) {
+        this.correctionY = correctionY;
     }
 }
