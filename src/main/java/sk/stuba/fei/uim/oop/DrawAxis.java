@@ -1,5 +1,7 @@
 package sk.stuba.fei.uim.oop;
 
+import lombok.Setter;
+
 import java.awt.*;
 import java.awt.geom.Line2D;
 
@@ -13,7 +15,8 @@ public class DrawAxis {
     boolean isY;
     int graphOffSet;
     double zoom;
-    boolean showGrid=true;
+    @Setter
+    boolean showGrid;
     MouseMovement mouseMovement;
 
     public DrawAxis(Graphics2D graph, double endOfAxis, double width, double height, double axisScale, boolean isY, int graphOffSet, double zoom, MouseMovement mouseMovement, double theOtherAxis) {
@@ -27,7 +30,7 @@ public class DrawAxis {
         this.zoom=zoom;
         this.theOtherAxis=theOtherAxis;
         this.mouseMovement=mouseMovement;
-        drawAxisScale();
+        drawAxisScale(graph);
     }
     //toto je základná podoba mierky ktorá sa neskôr upravý na požadovanú veľkosť, je volaná z metódy drawAxisScale
     private void fillListOfScale(double[] listOfYScale){
@@ -44,11 +47,8 @@ public class DrawAxis {
 
     }
 //((getWidth()/2+(i*graphScaleX)-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (getHeight()/2-(i*i)*graphScaleY-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), 1, 1));
-    public void drawAxisScale(){
-
-        if (showGrid){
-            graph.draw(new Line2D.Double());
-        }
+    public void drawAxisScale(Graphics2D graph){
+        this.graph=graph;
 
 
         //vykreslenie "holej" x osi
@@ -85,6 +85,7 @@ public class DrawAxis {
         //osadíme 0 do grafu
         graph.setPaint(Color.BLACK);
         graph.drawString("0",(int)((width/2+3-mouseMovement.getCorrectionX())*mouseMovement.getScalingX()),(int)((height/2+15-mouseMovement.getCorrectionY())*mouseMovement.getScalingY()));
+        System.out.println("           "+showGrid);
         if (showGrid) {
             graph.setPaint(Color.GRAY);
             for (int i = 0; i < listOfScale.length; i++) {
@@ -179,6 +180,7 @@ public class DrawAxis {
                 }
             }
         }
+
 
     }
 }

@@ -120,10 +120,14 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
 
         if  (startProgram==false){
         axisX=new DrawAxis(graph,yListMax,getWidth(),getHeight(),graphScaleY,true,graphOffSet,zoom,mouseMovement,xListMax);
-        axisY=new DrawAxis(graph,xListMax,getWidth(),getHeight(),graphScaleX,false,graphOffSet,zoom,mouseMovement,yListMax);}
+        axisX.setShowGrid(showGrid);
+        axisY=new DrawAxis(graph,xListMax,getWidth(),getHeight(),graphScaleX,false,graphOffSet,zoom,mouseMovement,yListMax);
+        axisY.setShowGrid(showGrid);
+        startProgram=true;
+        }
         else {
-            axisX.drawAxisScale();
-            axisY.drawAxisScale();
+            axisX.drawAxisScale(graph);
+            axisY.drawAxisScale(graph);
 
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,9 +158,9 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
         graph.setPaint(Color.RED);
         for(int i=0; i<xList.size(); i++){
             double drawX = (getWidth()/2+(xList.get(i)*graphScaleX)-mouseMovement.getCorrectionX())*mouseMovement.getScalingX();
-            System.out.println(drawX);
+          //  System.out.println(drawX);
             double drawY = (getHeight()/2-(yList.get(i)*graphScaleY)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY();
-            System.out.println(drawY);
+          //  System.out.println(drawY);
             graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,6 +268,9 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
         if (e.getSource().equals(grid)){
             System.out.println("clicked >|");
             showGrid=!showGrid;
+            axisY.setShowGrid(showGrid);
+            axisX.setShowGrid(showGrid);
+            repaint();
         }
         if (fx.isSelected()){
             System.out.println("fx   IS ON");
