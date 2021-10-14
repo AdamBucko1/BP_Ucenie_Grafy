@@ -119,8 +119,8 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
         graphScaleX=graphScaleX/2;
 
         if  (startProgram==false){
-        axisX=new DrawAxis(graph,yListMax,getWidth(),getHeight(),graphScaleY,true,graphOffSet,zoom,mouseMovement);
-        axisY=new DrawAxis(graph,xListMax,getWidth(),getHeight(),graphScaleX,false,graphOffSet,zoom,mouseMovement);}
+        axisX=new DrawAxis(graph,yListMax,getWidth(),getHeight(),graphScaleY,true,graphOffSet,zoom,mouseMovement,xListMax);
+        axisY=new DrawAxis(graph,xListMax,getWidth(),getHeight(),graphScaleX,false,graphOffSet,zoom,mouseMovement,yListMax);}
         else {
             axisX.drawAxisScale();
             axisY.drawAxisScale();
