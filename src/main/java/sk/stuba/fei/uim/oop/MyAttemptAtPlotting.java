@@ -29,11 +29,11 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
     boolean showFy=false;
     boolean showFz=false;
     boolean showMx=false;
-    ArrayList<Double> xList = new ArrayList<>();
+    /*ArrayList<Double> xList = new ArrayList<>();
     ArrayList<Double> yList = new ArrayList<>();
     ArrayList<Integer> zList = new ArrayList<>();
     ArrayList<Integer> mxList = new ArrayList<>();
-    ArrayList<Integer> tList = new ArrayList<>();
+    ArrayList<Integer> tList = new ArrayList<>();*/
 
 
     int graphOffSet=50;
@@ -42,20 +42,12 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
     MouseMovement mouseMovement;
     DrawAxis axisX;
     DrawAxis axisY;
+    Testing testing;
 
     public MyAttemptAtPlotting()  {
+        testing=new Testing();
 
-        Path dataFilePath = Paths.get("src/main/java/sk/stuba/fei/uim/oop/DataFile.txt");
-     /*   FileWriter writer =null;
-
-
-       /* try {
-            writer= new FileWriter("src/main/java/sk/stuba/fei/uim/oop/OutfileFile.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-
+       /* Path dataFilePath = Paths.get("src/main/java/sk/stuba/fei/uim/oop/DataFile.txt");
         try {
             Scanner scanner = new Scanner(dataFilePath);
             //List<Integer> integers = new ArrayList<>();
@@ -68,20 +60,14 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         //Y=x^2
         //WRITE DOESNT WORK YET
-        for (int i = 0; i < xList.size(); i++) {
+       /* for (int i = 0; i < xList.size(); i++) {
             yList.add(xList.get(i)*xList.get(i));
-      /*      try {
-                writer.write(yList.get(i));
-                writer.write(" ");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
-        }
+        }*/
         createFrame(this);
         mouseMovement=new MouseMovement(this);
         this.addMouseListener(mouseMovement);
@@ -100,20 +86,51 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
 
         // draw graph lines
         //calculates scale ratio between points and grap size
-        double xListMax;
-        if (Collections.max(xList)<Math.abs(Collections.min(xList))){
-            xListMax=Math.abs(Collections.min(xList));
+        double xListMax=Collections.max(testing.tList);
+        /*System.out.println(testing.tList);
+        if (Collections.max(testing.tList)<Math.abs(Collections.min(testing.tList))){
+            xListMax=Math.abs(Collections.min(testing.xList));
         }
         else {
-            xListMax=Collections.max(xList);
-        }
+            xListMax=Collections.max(testing.xList);
+        }*/
         double yListMax;
-        if (Collections.max(yList)<Math.abs(Collections.min(yList))){
-            yListMax=Math.abs(Collections.min(yList));
+        double listMin=Math.abs(Collections.min(testing.xList));
+        double listMax=Math.abs(Collections.max(testing.xList));
+        if (Math.abs(Collections.min(testing.yList))<listMin){
+            listMin=Math.abs(Collections.min(testing.yList));
+        }
+        if (Math.abs(Collections.min(testing.zList))<listMin){
+            listMin=Math.abs(Collections.min(testing.zList));
+        }
+        if (Math.abs(Collections.min(testing.mList))<listMin){
+            listMin=Math.abs(Collections.min(testing.mList));
+        }
+        if (Math.abs(Collections.max(testing.yList))>listMax){
+            listMax=Math.abs(Collections.max(testing.yList));
+        }
+        if (Math.abs(Collections.max(testing.zList))>listMax){
+            listMax=Math.abs(Collections.max(testing.zList));
+        }
+        if (Math.abs(Collections.max(testing.mList))>listMax){
+            listMax=Math.abs(Collections.max(testing.mList));
+        }
+
+        if (listMax>Math.abs(listMin)){
+            yListMax=listMax;
         }
         else {
-            yListMax=Collections.max(yList);
+            yListMax=Math.abs(listMin);
         }
+
+
+
+       /* if (Collections.max(testing.yList)<Math.abs(Collections.min(testing.yList))){
+            yListMax=Math.abs(Collections.min(testing.yList));
+        }
+        else {
+            yListMax=Collections.max(testing.yList);
+        }*/
 
 
         //zistujem scale jednotlivych osi aby sa zmestili na graf
@@ -145,11 +162,11 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        for (double i=-xListMax;i<xListMax;i=i+xListMax/10000){
+        /*for (double i=-xListMax;i<xListMax;i=i+xListMax/10000){
             //Stred osi X.... ziska poziciu na osi X  (i), vynasoby scalom aby bod pasoval na graf, posunie bod o hodnotu ziskanu pri zoomovani... a zvacsi ho na pozadovanu zoomnutu hodnotu
             graph.fill(new Ellipse2D.Double((getWidth()/2+(i*graphScaleX)-mouseMovement.getCorrectionX())*(mouseMovement.getScalingX()), (getHeight()/2-(i*i)*graphScaleY-mouseMovement.getCorrectionY())*mouseMovement.getScalingY(), 1, 1));
                                                           //REALNY BOD                  //POsun                     //Scaling                                    //REALNY BOD                  //POsun                     //Scaling
-        }
+        }*/
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,24 +177,34 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
         graph.setPaint(Color.RED);
-        for(int i=0; i<xList.size(); i++){
-            double drawX = (getWidth()/2+(xList.get(i)*graphScaleX)-mouseMovement.getCorrectionX())*mouseMovement.getScalingX();
-          //  System.out.println(drawX);
-            double drawY = (getHeight()/2-(yList.get(i)*graphScaleY)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY();
-          //  System.out.println(drawY);
+        for(int i=0; i<testing.xList.size(); i++){
+            double drawX = (getWidth()/2+(testing.tList.get(i)*graphScaleX)-mouseMovement.getCorrectionX())*mouseMovement.getScalingX();
+            double drawY = (getHeight()/2-(testing.xList.get(i)*graphScaleY)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY();
             graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         }
+        graph.setPaint(Color.GREEN);
+        for(int i=0; i<testing.yList.size(); i++){
+            double drawX = (getWidth()/2+(testing.tList.get(i)*graphScaleX)-mouseMovement.getCorrectionX())*mouseMovement.getScalingX();
+            double drawY = (getHeight()/2-(testing.yList.get(i)*graphScaleY)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY();
+            graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
+        }
+        graph.setPaint(Color.BLUE);
+        for(int i=0; i<testing.zList.size(); i++){
+            double drawX = (getWidth()/2+(testing.tList.get(i)*graphScaleX)-mouseMovement.getCorrectionX())*mouseMovement.getScalingX();
+            double drawY = (getHeight()/2-(testing.zList.get(i)*graphScaleY)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY();
+            graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
+        }
+        graph.setPaint(Color.ORANGE);
+            for(int i=0; i<testing.mList.size(); i++){
+            double drawX = (getWidth()/2+(testing.tList.get(i)*graphScaleX)-mouseMovement.getCorrectionX())*mouseMovement.getScalingX();
+            double drawY = (getHeight()/2-(testing.mList.get(i)*graphScaleY)-mouseMovement.getCorrectionY())*mouseMovement.getScalingY();
+            graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
+        }
+
+
         graph.setPaint(Color.GRAY);
         int rectangleCoordX;
         int rectangleCoordY;

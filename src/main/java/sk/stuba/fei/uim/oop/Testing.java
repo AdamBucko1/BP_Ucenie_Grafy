@@ -7,14 +7,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Testing {
-    public static void main(String[] args)
-    {
-        ArrayList<Double> xList = new ArrayList<>();
-        ArrayList<Double> yList = new ArrayList<>();
-        ArrayList<Double> zList = new ArrayList<>();
-        ArrayList<Double> mList = new ArrayList<>();
-        ArrayList<Double> tList = new ArrayList<>();
+    public ArrayList<Double> xList = new ArrayList<>();
+    public ArrayList<Double> yList = new ArrayList<>();
+    public ArrayList<Double> zList = new ArrayList<>();
+    public ArrayList<Double> mList = new ArrayList<>();
+    public ArrayList<Double> tList = new ArrayList<>();
+    public ArrayList<String> variableList = new ArrayList<>();
 
+    public Testing() {
+        createArrayLists();
+    }
+
+    public void createArrayLists() {
         Path datafile = Paths.get("src/main/java/sk/stuba/fei/uim/oop/DataTest");
         Scanner scan = null;
         try {
@@ -29,19 +33,32 @@ public class Testing {
         String[] DataLists = content.split("\n");
         System.out.println();
         String[] variables = DataLists[0].split(" ");
-        String[] fxList = DataLists[1].split(" ");
-        String[] fyList = DataLists[2].split(" ");
-        String[] fzList = DataLists[3].split(" ");
-        String[] mxList = DataLists[4].split(" ");
-        for (int i=0;true;i++){
-            if (i<fxList.length){
-                xList.add(Double.valueOf(fxList[i]));
+        String[] tsArray = DataLists[1].split(" ");
+        String[] fxArray = DataLists[2].split(" ");
+        String[] fyArray = DataLists[3].split(" ");
+        String[] fzArray = DataLists[4].split(" ");
+        String[] mxArray = DataLists[5].split(" ");
+        for (int i = 0; true; i++) {
+            if (i < fxArray.length) {
+                xList.add(Double.valueOf(fxArray[i]));
             }
-            if (i<fyList.length){
-                yList.add(Double.valueOf(fyList[i]));
+            if (i < fyArray.length) {
+                yList.add(Double.valueOf(fyArray[i]));
             }
-            if (i<fzList.length){
-                zList.add(Double.valueOf(fzList[i]));
+            if (i < fzArray.length) {
+                zList.add(Double.valueOf(fzArray[i]));
+            }
+            if (i < mxArray.length) {
+                mList.add(Double.valueOf(mxArray[i]));
+            }
+            if (i < tsArray.length) {
+                tList.add(Double.valueOf(tsArray[i]));
+            }
+            if (i<variables.length){
+                variableList.add(variables[i]);
+            }
+            if (i> fxArray.length&&i> fyArray.length&&i> fzArray.length&&i> mxArray.length&&i> tsArray.length){
+                break;
             }
 
 
