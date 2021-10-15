@@ -29,8 +29,8 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
     boolean showFy=false;
     boolean showFz=false;
     boolean showMx=false;
-    ArrayList<Integer> xList = new ArrayList<>();
-    ArrayList<Integer> yList = new ArrayList<>();
+    ArrayList<Double> xList = new ArrayList<>();
+    ArrayList<Double> yList = new ArrayList<>();
     ArrayList<Integer> zList = new ArrayList<>();
     ArrayList<Integer> mxList = new ArrayList<>();
     ArrayList<Integer> tList = new ArrayList<>();
@@ -46,14 +46,14 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
     public MyAttemptAtPlotting()  {
 
         Path dataFilePath = Paths.get("src/main/java/sk/stuba/fei/uim/oop/DataFile.txt");
-        FileWriter writer =null;
+     /*   FileWriter writer =null;
 
 
-        try {
+       /* try {
             writer= new FileWriter("src/main/java/sk/stuba/fei/uim/oop/OutfileFile.txt");
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         try {
@@ -61,7 +61,7 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
             //List<Integer> integers = new ArrayList<>();
             while (scanner.hasNext()) {
                 if (scanner.hasNextInt()) {
-                    xList.add(scanner.nextInt());
+                    xList.add(scanner.nextDouble());
                 } else {
                     scanner.next();
                 }
@@ -75,12 +75,12 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
         //WRITE DOESNT WORK YET
         for (int i = 0; i < xList.size(); i++) {
             yList.add(xList.get(i)*xList.get(i));
-            try {
+      /*      try {
                 writer.write(yList.get(i));
                 writer.write(" ");
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
         createFrame(this);
         mouseMovement=new MouseMovement(this);
