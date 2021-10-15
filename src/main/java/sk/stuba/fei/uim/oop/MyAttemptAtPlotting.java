@@ -31,6 +31,11 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
     boolean showMx=false;
     ArrayList<Integer> xList = new ArrayList<>();
     ArrayList<Integer> yList = new ArrayList<>();
+    ArrayList<Integer> zList = new ArrayList<>();
+    ArrayList<Integer> mxList = new ArrayList<>();
+    ArrayList<Integer> tList = new ArrayList<>();
+
+
     int graphOffSet=50;
     double zoom=1;
     boolean startProgram=false;
