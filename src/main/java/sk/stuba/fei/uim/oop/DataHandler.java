@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Testing {
+public class DataHandler {
     public ArrayList<Double> xList = new ArrayList<>();
     public ArrayList<Double> yList = new ArrayList<>();
     public ArrayList<Double> zList = new ArrayList<>();
@@ -14,12 +14,12 @@ public class Testing {
     public ArrayList<Double> tList = new ArrayList<>();
     public ArrayList<String> variableList = new ArrayList<>();
 
-    public Testing() {
+    public DataHandler() {
         createArrayLists();
     }
 
     public void createArrayLists() {
-        Path datafile = Paths.get("src/main/java/sk/stuba/fei/uim/oop/DataTest");
+        Path datafile = Paths.get("src/main/java/sk/stuba/fei/uim/oop/DataSheet");
         Scanner scan = null;
         try {
             scan = new Scanner(datafile);
@@ -28,10 +28,8 @@ public class Testing {
         }
         scan.useDelimiter("\\Z");
         String content = scan.next();
-        System.out.println(content);
 
         String[] DataLists = content.split("\n");
-        System.out.println();
         String[] variables = DataLists[0].split(" ");
         String[] tsArray = DataLists[1].split(" ");
         String[] fxArray = DataLists[2].split(" ");
@@ -39,6 +37,9 @@ public class Testing {
         String[] fzArray = DataLists[4].split(" ");
         String[] mxArray = DataLists[5].split(" ");
         for (int i = 0; true; i++) {
+            if (i> fxArray.length&&i> fyArray.length&&i> fzArray.length&&i> mxArray.length&&i> tsArray.length){
+                break;
+            }
             if (i < fxArray.length) {
                 xList.add(Double.valueOf(fxArray[i]));
             }
@@ -57,13 +58,7 @@ public class Testing {
             if (i<variables.length){
                 variableList.add(variables[i]);
             }
-            if (i> fxArray.length&&i> fyArray.length&&i> fzArray.length&&i> mxArray.length&&i> tsArray.length){
-                break;
-            }
-
-
         }
-
-    }
+      }
     }
 

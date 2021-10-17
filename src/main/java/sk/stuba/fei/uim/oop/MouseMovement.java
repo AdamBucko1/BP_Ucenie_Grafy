@@ -32,14 +32,12 @@ public class MouseMovement extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         startX=e.getX();
         startY=e.getY();
-        System.out.println(startX);
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         endX = e.getX();
         endY = e.getY();
-        System.out.println(endX);
         rectStartX=startX;
         rectStartY=startY;
         rectEndX=endX;

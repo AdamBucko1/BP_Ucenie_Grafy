@@ -27,10 +27,10 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
     MouseMovement mouseMovement;
     DrawAxis axisX;
     DrawAxis axisY;
-    Testing testing;
+    DataHandler dataHandler;
 
     public MyAttemptAtPlotting()  {
-        testing=new Testing();
+        dataHandler =new DataHandler();
         createFrame(this);
         mouseMovement=new MouseMovement(this);
         this.addMouseListener(mouseMovement);
@@ -49,27 +49,27 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
 
         // draw graph lines
         //calculates scale ratio between points and grap size
-        double xListMax=Collections.max(testing.tList);
+        double xListMax=Collections.max(dataHandler.tList);
         double yListMax;
-        double listMin=Math.abs(Collections.min(testing.xList));
-        double listMax=Math.abs(Collections.max(testing.xList));
-        if (Math.abs(Collections.min(testing.yList))<listMin){
-            listMin=Math.abs(Collections.min(testing.yList));
+        double listMin=Math.abs(Collections.min(dataHandler.xList));
+        double listMax=Math.abs(Collections.max(dataHandler.xList));
+        if (Math.abs(Collections.min(dataHandler.yList))<listMin){
+            listMin=Math.abs(Collections.min(dataHandler.yList));
         }
-        if (Math.abs(Collections.min(testing.zList))<listMin){
-            listMin=Math.abs(Collections.min(testing.zList));
+        if (Math.abs(Collections.min(dataHandler.zList))<listMin){
+            listMin=Math.abs(Collections.min(dataHandler.zList));
         }
-        if (Math.abs(Collections.min(testing.mList))<listMin){
-            listMin=Math.abs(Collections.min(testing.mList));
+        if (Math.abs(Collections.min(dataHandler.mList))<listMin){
+            listMin=Math.abs(Collections.min(dataHandler.mList));
         }
-        if (Math.abs(Collections.max(testing.yList))>listMax){
-            listMax=Math.abs(Collections.max(testing.yList));
+        if (Math.abs(Collections.max(dataHandler.yList))>listMax){
+            listMax=Math.abs(Collections.max(dataHandler.yList));
         }
-        if (Math.abs(Collections.max(testing.zList))>listMax){
-            listMax=Math.abs(Collections.max(testing.zList));
+        if (Math.abs(Collections.max(dataHandler.zList))>listMax){
+            listMax=Math.abs(Collections.max(dataHandler.zList));
         }
-        if (Math.abs(Collections.max(testing.mList))>listMax){
-            listMax=Math.abs(Collections.max(testing.mList));
+        if (Math.abs(Collections.max(dataHandler.mList))>listMax){
+            listMax=Math.abs(Collections.max(dataHandler.mList));
         }
 
         if (listMax>Math.abs(listMin)){
@@ -100,33 +100,33 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
 
         if (showFx==true) {
             graph.setPaint(Color.RED);
-            for (int i = 0; i < testing.xList.size(); i++) {
-                double drawX = (getWidth() / 2 + (testing.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
-                double drawY = (getHeight() / 2 - (testing.xList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
+            for (int i = 0; i < dataHandler.xList.size(); i++) {
+                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
+                double drawY = (getHeight() / 2 - (dataHandler.xList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
                 graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
             }
         }
         if (showFy==true) {
             graph.setPaint(Color.GREEN);
-            for (int i = 0; i < testing.yList.size(); i++) {
-                double drawX = (getWidth() / 2 + (testing.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
-                double drawY = (getHeight() / 2 - (testing.yList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
+            for (int i = 0; i < dataHandler.yList.size(); i++) {
+                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
+                double drawY = (getHeight() / 2 - (dataHandler.yList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
                 graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
             }
         }
         if (showFz==true) {
             graph.setPaint(Color.BLUE);
-            for (int i = 0; i < testing.zList.size(); i++) {
-                double drawX = (getWidth() / 2 + (testing.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
-                double drawY = (getHeight() / 2 - (testing.zList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
+            for (int i = 0; i < dataHandler.zList.size(); i++) {
+                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
+                double drawY = (getHeight() / 2 - (dataHandler.zList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
                 graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
             }
         }
         if (showMx==true) {
             graph.setPaint(Color.ORANGE);
-            for (int i = 0; i < testing.mList.size(); i++) {
-                double drawX = (getWidth() / 2 + (testing.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
-                double drawY = (getHeight() / 2 - (testing.mList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
+            for (int i = 0; i < dataHandler.mList.size(); i++) {
+                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
+                double drawY = (getHeight() / 2 - (dataHandler.mList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
                 graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
             }
         }
@@ -219,42 +219,33 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(grid)){
-            System.out.println("clicked >|");
             showGrid=!showGrid;
             axisY.setShowGrid(showGrid);
             axisX.setShowGrid(showGrid);
             repaint();
         }
         if (fx.isSelected()){
-            System.out.println("fx   IS ON");
             showFx=true;
         }
         else {
-            System.out.println("fx   IS OFF");
             showFx=false;
         }
         if (fy.isSelected()){
-            System.out.println("fy   IS ON");
             showFy=true;
         }
         else {
-            System.out.println("fy   IS OFF");
             showFy=false;
         }
         if (fz.isSelected()){
-            System.out.println("fz   IS ON");
             showFz=true;
         }
         else {
-            System.out.println("fz   IS OFF");
             showFz=false;
         }
         if (mx.isSelected()){
-            System.out.println("mx   IS ON");
             showMx=true;
         }
         else {
-            System.out.println("mx   IS OFF");
             showMx=false;
         }
         repaint();
