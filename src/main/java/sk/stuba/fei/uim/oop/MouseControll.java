@@ -3,14 +3,14 @@ package sk.stuba.fei.uim.oop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class MouseMovement extends MouseAdapter {
+public class MouseControll extends MouseAdapter {
 
     private int startX=0;
     private int startY=0;
 
     private int endX=0;
     private int endY=0;
-    private MyAttemptAtPlotting myAttemptAtPlotting;
+    private GraphPlotter graphPlotter;
 
     private double scalingX=1;
     private double scalingY=1;
@@ -22,8 +22,8 @@ public class MouseMovement extends MouseAdapter {
     private int rectEndY=0;
 
 
-    public MouseMovement(MyAttemptAtPlotting myAttemptAtPlotting) {
-        this.myAttemptAtPlotting=myAttemptAtPlotting;
+    public MouseControll(GraphPlotter graphPlotter) {
+        this.graphPlotter = graphPlotter;
 
 
     }
@@ -42,7 +42,7 @@ public class MouseMovement extends MouseAdapter {
         rectStartY=startY;
         rectEndX=endX;
         rectEndY=endY;
-        myAttemptAtPlotting.repaint();
+        graphPlotter.repaint();
     }
 
     @Override
@@ -59,15 +59,15 @@ public class MouseMovement extends MouseAdapter {
         else {
             correctionY=(int)(correctionY+(double)startY/scalingY);
         }
-        scalingY =scalingY*(double)myAttemptAtPlotting.getHeight()/(double)Math.abs(endY-startY);
-        scalingX =scalingX*(double)myAttemptAtPlotting.getWidth()/(double)Math.abs(endX-startX);
+        scalingY =scalingY*(double) graphPlotter.getHeight()/(double)Math.abs(endY-startY);
+        scalingX =scalingX*(double) graphPlotter.getWidth()/(double)Math.abs(endX-startX);
         rectStartX=0;
         rectStartY=0;
         rectEndX=0;
         rectEndY=0;
-        myAttemptAtPlotting.repaint();
-        myAttemptAtPlotting.setFocusable(true);
-        myAttemptAtPlotting.requestFocusInWindow();
+        graphPlotter.repaint();
+        graphPlotter.setFocusable(true);
+        graphPlotter.requestFocusInWindow();
 
     }
     public double getScalingX() {

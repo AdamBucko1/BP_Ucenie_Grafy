@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
 import java.util.Collections;
 
-public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionListener {
+public class GraphPlotter extends JPanel implements KeyListener, ActionListener {
 
     JCheckBox fx;
     JCheckBox fy;
@@ -24,17 +24,17 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
     int graphOffSet=50;
     double zoom=1;
     boolean startProgram=false;
-    MouseMovement mouseMovement;
-    DrawAxis axisX;
-    DrawAxis axisY;
+    MouseControll mouseControll;
+    AxisNGridBuilder axisX;
+    AxisNGridBuilder axisY;
     DataHandler dataHandler;
 
-    public MyAttemptAtPlotting()  {
+    public GraphPlotter()  {
         dataHandler =new DataHandler();
         createFrame(this);
-        mouseMovement=new MouseMovement(this);
-        this.addMouseListener(mouseMovement);
-        this.addMouseMotionListener(mouseMovement);
+        mouseControll =new MouseControll(this);
+        this.addMouseListener(mouseControll);
+        this.addMouseMotionListener(mouseControll);
         this.addKeyListener(this);
     }
 
@@ -86,9 +86,9 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
         graphScaleX=graphScaleX/2;
 
         if  (startProgram==false){
-        axisX=new DrawAxis(graph,yListMax,getWidth(),getHeight(),graphScaleY,true,graphOffSet,zoom,mouseMovement,xListMax);
+        axisX=new AxisNGridBuilder(graph,yListMax,getWidth(),getHeight(),graphScaleY,true,graphOffSet,zoom, mouseControll,xListMax);
         axisX.setShowGrid(showGrid);
-        axisY=new DrawAxis(graph,xListMax,getWidth(),getHeight(),graphScaleX,false,graphOffSet,zoom,mouseMovement,yListMax);
+        axisY=new AxisNGridBuilder(graph,xListMax,getWidth(),getHeight(),graphScaleX,false,graphOffSet,zoom, mouseControll,yListMax);
         axisY.setShowGrid(showGrid);
         startProgram=true;
         }
@@ -101,32 +101,32 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
         if (showFx==true) {
             graph.setPaint(Color.RED);
             for (int i = 0; i < dataHandler.xList.size(); i++) {
-                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
-                double drawY = (getHeight() / 2 - (dataHandler.xList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
+                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseControll.getCorrectionX()) * mouseControll.getScalingX();
+                double drawY = (getHeight() / 2 - (dataHandler.xList.get(i) * graphScaleY) - mouseControll.getCorrectionY()) * mouseControll.getScalingY();
                 graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
             }
         }
         if (showFy==true) {
             graph.setPaint(Color.GREEN);
             for (int i = 0; i < dataHandler.yList.size(); i++) {
-                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
-                double drawY = (getHeight() / 2 - (dataHandler.yList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
+                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseControll.getCorrectionX()) * mouseControll.getScalingX();
+                double drawY = (getHeight() / 2 - (dataHandler.yList.get(i) * graphScaleY) - mouseControll.getCorrectionY()) * mouseControll.getScalingY();
                 graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
             }
         }
         if (showFz==true) {
             graph.setPaint(Color.BLUE);
             for (int i = 0; i < dataHandler.zList.size(); i++) {
-                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
-                double drawY = (getHeight() / 2 - (dataHandler.zList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
+                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseControll.getCorrectionX()) * mouseControll.getScalingX();
+                double drawY = (getHeight() / 2 - (dataHandler.zList.get(i) * graphScaleY) - mouseControll.getCorrectionY()) * mouseControll.getScalingY();
                 graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
             }
         }
         if (showMx==true) {
             graph.setPaint(Color.ORANGE);
             for (int i = 0; i < dataHandler.mList.size(); i++) {
-                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseMovement.getCorrectionX()) * mouseMovement.getScalingX();
-                double drawY = (getHeight() / 2 - (dataHandler.mList.get(i) * graphScaleY) - mouseMovement.getCorrectionY()) * mouseMovement.getScalingY();
+                double drawX = (getWidth() / 2 + (dataHandler.tList.get(i) * graphScaleX) - mouseControll.getCorrectionX()) * mouseControll.getScalingX();
+                double drawY = (getHeight() / 2 - (dataHandler.mList.get(i) * graphScaleY) - mouseControll.getCorrectionY()) * mouseControll.getScalingY();
                 graph.fill(new Ellipse2D.Double(drawX, drawY, 4, 4));
             }
         }
@@ -134,24 +134,24 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
         graph.setPaint(Color.GRAY);
         int rectangleCoordX;
         int rectangleCoordY;
-        if (mouseMovement.getRectStartX()<mouseMovement.getRectEndX()){
-            rectangleCoordX=mouseMovement.getRectStartX();
+        if (mouseControll.getRectStartX()< mouseControll.getRectEndX()){
+            rectangleCoordX= mouseControll.getRectStartX();
         }
         else {
-            rectangleCoordX=mouseMovement.getRectEndX();
+            rectangleCoordX= mouseControll.getRectEndX();
         }
-        if (mouseMovement.getRectStartY()<mouseMovement.getRectEndY()){
-            rectangleCoordY=mouseMovement.getRectStartY();
+        if (mouseControll.getRectStartY()< mouseControll.getRectEndY()){
+            rectangleCoordY= mouseControll.getRectStartY();
         }
         else {
-            rectangleCoordY=mouseMovement.getRectEndY();
+            rectangleCoordY= mouseControll.getRectEndY();
         }
-        graph.drawRect(rectangleCoordX,rectangleCoordY, Math.abs(mouseMovement.getRectEndX()-mouseMovement.getRectStartX()),Math.abs(mouseMovement.getRectEndY()-mouseMovement.getRectStartY()));
+        graph.drawRect(rectangleCoordX,rectangleCoordY, Math.abs(mouseControll.getRectEndX()- mouseControll.getRectStartX()),Math.abs(mouseControll.getRectEndY()- mouseControll.getRectStartY()));
 
     }
 
 
-    private void createFrame(MyAttemptAtPlotting myAttemptAtPlotting){
+    private void createFrame(GraphPlotter graphPlotter){
         //create an instance of JFrame class
         JFrame frame = new JFrame();
         // set size, layout and location for frame.
@@ -160,7 +160,7 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
         frame.setSize(700, 500);
         frame.setLocation(200, 200);
 
-        frame.add("Center",myAttemptAtPlotting);
+        frame.add("Center", graphPlotter);
 
         JPanel controlPanel= new JPanel();
         controlPanel.setSize(700,100);
@@ -202,10 +202,10 @@ public class MyAttemptAtPlotting extends JPanel implements KeyListener, ActionLi
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode()==KeyEvent.VK_ESCAPE){
-            mouseMovement.setCorrectionX(0);
-            mouseMovement.setCorrectionY(0);
-            mouseMovement.setScalingX(1);
-            mouseMovement.setScalingY(1);
+            mouseControll.setCorrectionX(0);
+            mouseControll.setCorrectionY(0);
+            mouseControll.setScalingX(1);
+            mouseControll.setScalingY(1);
             repaint();
 
         }
